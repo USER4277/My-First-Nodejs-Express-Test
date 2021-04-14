@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "express3-handlebars": "^0.5.2"
+  },
+  "name": "my-first-nodejs-express-test",
+  "description": "My First Nodejs Express Test",
+  "version": "1.0.0",
+  "main": "P2.js",
+  "scripts": {
+    "test": "No"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USER4277/My-First-Nodejs-Express-Test.git"
+  },
+  "author": "Jesse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USER4277/My-First-Nodejs-Express-Test/issues"
+  },
+  "homepage": "https://github.com/USER4277/My-First-Nodejs-Express-Test#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2"
+  }
+}

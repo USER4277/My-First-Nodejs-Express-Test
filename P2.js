@@ -1,13 +1,8 @@
+var fortune1 = require('./Lib/fortune.js');
 var express = require('express');
 var app = express();
 
-var fortunes = [
-    "征服恐惧或者被恐惧征服",
-    "河流需要春天",
-    "不要畏惧未知",
-    "你终将获得快乐的结局",
-    "无论如何，保持简单"
-];
+
 
 //set view engine of handlebar
 //这段代码创建了一个视图引擎，并对Express进行了配置，将其作为默认的视图引擎。
@@ -20,6 +15,11 @@ app.set('view engine','handlebars');
 app.set('port',process.env.port || 3000);//process.env 属性会返回包含用户环境的对象。
 //注意我们指定程序端口的方式：app.set(port, process.env.PORT || 3000)。这样我们可以在启动服务器前通过设置环境变量覆盖端口。如果你在运行这个案例时发现它监听的不是3000端口，检查一下是否设置了环境变量PORT。
 
+app.use(function(req,res,next){
+    res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+});
+
 app.use(express.static( __dirname + '/public'));
 
 //Express默认的状态码是200，不用显式指定
@@ -30,9 +30,11 @@ app.get('/',function(req,res){
 //我们这次使用的不是Node的res.end，而是换成了Express的扩展res.send。我们还用res.set和res.status替换了Node的res.writeHead。
 //Express还提供了一个res.type方法，可以方便地设置响应头Content-Type。尽管仍然可以使用res.writeHead和res.end，但没有必要也不作推荐。
 app.get('/about', function(req, res){
-    var randomFortunes = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', { fortune :randomFortunes });
+ //   var randomFortunes = fortunes[Math.floor(Math.random() * fortunes.length)];
+    res.render('about', { fortune1 :fortune1.getFortune(), pageTestScript:'/qa/test-about.js'});
 });
+
+
 
 //定制404页面
 app.use(function(req,res){
@@ -45,8 +47,7 @@ app.use(function(req,res){
 //use():Mounts the specified middleware function or functions at the specified path: the middleware function is executed when the base of the requested path matches path.
 app.use(
     function(err,req,res,next){
-        console.error(err,stack);
-        
+    
         res.status(500);
         res.render('500');
     }
